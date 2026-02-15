@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "E-Signature API",
+    "description": "Collection complète pour tester l'API de signature électronique",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Upload Document",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "/path/to/your/document.pdf"
+            },
+            {
+              "key": "uploadedBy",
+              "value": "john.doe",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/upload",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "upload"]
+        }
+      }
+    },
+    {
+      "name": "2. Sign with Simple Signature",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"documentId\": 1,\n  \"signerName\": \"Jean Dupont\",\n  \"signerEmail\": \"jean@example.com\",\n  \"signatureType\": \"SIMPLE\",\n  \"signatureImageBase64\": \"YOUR_BASE64_IMAGE_HERE\",\n  \"pageNumber\": 0,\n  \"xPosition\": 100,\n  \"yPosition\": 100,\n  \"width\": 150,\n  \"height\": 50\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/sign",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "sign"]
+        }
+      }
+    },
+    {
+      "name": "3. Sign with Certificate (Advanced)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"documentId\": 1,\n  \"signerName\": \"Marie Martin\",\n  \"signerEmail\": \"marie@example.com\",\n  \"signatureType\": \"ADVANCED\",\n  \"certificateBase64\": \"YOUR_CERTIFICATE_BASE64_HERE\",\n  \"certificatePassword\": \"password123\",\n  \"pageNumber\": 0,\n  \"xPosition\": 100,\n  \"yPosition\": 200,\n  \"width\": 200,\n  \"height\": 80\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/sign",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "sign"]
+        }
+      }
+    },
+    {
+      "name": "4. Create Signature Workflow",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"documentId\": 1,\n  \"expirationDays\": 7,\n  \"signers\": [\n    {\n      \"name\": \"Directeur\",\n      \"email\": \"directeur@company.com\",\n      \"signOrder\": 1,\n      \"requiredSignatureType\": \"ADVANCED\"\n    },\n    {\n      \"name\": \"RH Manager\",\n      \"email\": \"rh@company.com\",\n      \"signOrder\": 2,\n      \"requiredSignatureType\": \"SIMPLE\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/workflow",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "workflow"]
+        }
+      }
+    },
+    {
+      "name": "5. Get Document",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "1"]
+        }
+      }
+    },
+    {
+      "name": "6. Get Document Workflow",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/1/workflow",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "1", "workflow"]
+        }
+      }
+    },
+    {
+      "name": "7. Verify Signatures",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/1/verify",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "1", "verify"]
+        }
+      }
+    },
+    {
+      "name": "8. Download Signed Document",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/1/download",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "1", "download"]
+        }
+      }
+    },
+    {
+      "name": "9. Reject Signature",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/documents/workflow/:token/reject?reason=Document incorrect",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "documents", "workflow", ":token", "reject"],
+          "query": [
+            {
+              "key": "reason",
+              "value": "Document incorrect"
+            }
+          ],
+          "variable": [
+            {
+              "key": "token",
+              "value": "WORKFLOW_TOKEN_HERE"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
